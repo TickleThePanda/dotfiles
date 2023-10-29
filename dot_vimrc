@@ -1,0 +1,106 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'https://github.com/PProvost/vim-ps1.git'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'powerline/fonts'
+Plugin 'scrooloose/syntastic'
+Plugin 'chrisbra/unicode.vim'
+
+call vundle#end()
+
+filetype plugin on
+
+"airline
+let g:airline_theme='solarized'
+let g:airline_powerline_fonts = 1
+
+"git gutter
+set updatetime=1000
+
+"vim-colours-solarized
+syntax enable
+set background=dark
+colorscheme solarized
+
+"syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+"native vim
+
+let g:solarized_termtrans=1
+
+syntax on
+
+set wildmenu
+
+set showcmd
+
+set hlsearch
+
+set ignorecase
+set smartcase
+
+set backspace=indent,eol,start
+
+set autoindent
+
+set nostartofline
+
+set ruler
+
+set laststatus=2
+
+set confirm
+
+set visualbell
+
+set t_vb=
+
+set mouse=a
+
+set number
+
+highlight LineNr ctermbg=black
+
+set notimeout ttimeout ttimeoutlen=200
+
+set pastetoggle=<F11>
+
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+
+set undodir=$HOME/.vim/undo
+set undofile
+
+set viminfo='20,<1000,s1000
+
+set wrap!
+
+highlight ColorColumn ctermbg=7
+
+set spelllang=en_gb
+
+au FileType markdown setl cc=72 tw=72
+au FileType markdown setl spell
+
+set title
+
