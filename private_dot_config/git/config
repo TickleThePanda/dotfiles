@@ -1,0 +1,59 @@
+[user]
+  useConfigOnly = true
+[alias]
+  # ---- shorthand ----
+  s = status
+  cob = checkout -b
+  a = add
+  co = checkout
+  ci = commit
+  d = diff
+
+  unbugger = reset --hard HEAD
+  last = log -1 HEAD
+  
+  # ---- tools ----
+  cleanup = "!git delete-merged && git remote prune origin"
+  delete-merged = "!git branch --merged | grep  -v '\\*\\|master\\|develop' | xargs -n 1 git branch -d || echo \"no branches\""
+  branch-name = !git rev-parse --abbrev-ref HEAD
+  find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+  show-merge = "!sh -c 'merge=$(git find-merge $0 $1) && [ -n \"$merge\" ] && git show $merge'"
+  list-detached-commits = "!git fsck --lost-found | grep commit | awk '{print $3}' | xargs -I \"{}\" git --no-pager show -s --format=\"%aI - %H - %s\" \"{}\" | sort"
+  exclude = !sh -c \"echo \"$1\" >> $(git rev-parse --show-cdup).git/info/exclude\" -
+  edit-branch = "!git rebase -i $(git merge-base develop $(git rev-parse HEAD))"
+
+  setup-user = "!f() { if [ $# -eq 0 ] ; then echo \"error: please provide the name of the user\" ; exit 1 ; fi ; git config --local user.name \"$(git config --get users.$1.name)\" ; git config --local user.email \"$(git config --get users.$1.email)\" ; }; f "
+
+[core]
+  autocrlf = input
+  hooksPath = ~/.gitconfig.d/hooks
+  commentchar = $
+  whitespace = blank-at-eol,blank-at-eof,space-before-tab,indent-with-none-tab,tab-in-indent
+  eol = lf
+[filter "lfs"]
+  clean = git-lfs clean -- %f
+  smudge = git-lfs smudge -- %f
+  required = true
+  process = git-lfs filter-process
+[push]
+  default = current
+
+[merge]
+  conflictstyle = diff3
+[filter "trimWhitespace"]
+  clean = git-stripspace
+[diff]
+  tool = vimdiff
+  colormoved = default
+
+[users "personal"]
+  name = Panda Rushwood | TickleThePanda
+  email = panda@ticklethepanda.dev
+[users "work"]
+  name = Panda Rushwood
+  email = panda@energyandcleanair.org
+
+[init]
+  defaultBranch = main
+[credential]
+  helper = cache
